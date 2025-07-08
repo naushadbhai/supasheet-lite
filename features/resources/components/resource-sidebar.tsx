@@ -48,7 +48,7 @@ export function ResourceSidebar({
 
   return (
     <Sidebar
-      collapsible="none"
+      collapsible="icon"
       className="top-(--header-height) h-[calc(100svh-var(--header-height)-1px)]! border-r"
     >
       <SidebarHeader className="gap-2.5 border-b">

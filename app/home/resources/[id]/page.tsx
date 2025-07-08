@@ -30,6 +30,10 @@ export default async function HomeResourcePage(props: {
   ]);
 
   return (
+    <DataTableSkeleton columnCount={7} rowCount={100} filterCount={2} />
+  )
+
+  return (
     <Suspense
       fallback={
         <DataTableSkeleton

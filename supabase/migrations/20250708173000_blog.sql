@@ -182,6 +182,8 @@ create table post_tags (
     primary key (post_id, tag_id)
 );
 
+alter table post_tags enable row level security;
+
 create policy "Enable read access for all users"
 on post_tags
 for select
