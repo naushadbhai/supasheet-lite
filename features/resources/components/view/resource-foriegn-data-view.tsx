@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-import { Tables } from "@/lib/database.types";
-import { Relationship } from "@/lib/database-meta.types";
+
 import { ExternalLinkIcon } from "lucide-react";
+
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
+import { Relationship } from "@/lib/database-meta.types";
+import { Tables } from "@/lib/database.types";
 
 export function ResourceForiegnDataView({
   tableSchema,
@@ -13,7 +15,9 @@ export function ResourceForiegnDataView({
 }) {
   const relationships = (tableSchema?.relationships as Relationship[]) ?? [];
 
-  const refineRelationships = relationships.filter(relationship => relationship.target_table_schema === 'public');
+  const refineRelationships = relationships.filter(
+    (relationship) => relationship.target_table_schema === "public",
+  );
 
   if (refineRelationships.length === 0) return null;
 
@@ -24,12 +28,18 @@ export function ResourceForiegnDataView({
         <Table>
           <TableBody>
             {refineRelationships.map((relationship) => {
-              let value = singleResourceData?.[relationship.source_column_name as keyof typeof singleResourceData];
+              let value =
+                singleResourceData?.[
+                  relationship.source_column_name as keyof typeof singleResourceData
+                ];
               let link = `/home/resources/${relationship.target_table_name}?filters=[{"id":"${relationship.target_column_name}","value":"${value}","variant":"text","operator":"eq","filterId":"${relationship.id}"}]`;
-              
+
               if (!value) {
-                value = singleResourceData?.[relationship.target_column_name as keyof typeof singleResourceData];
-                link = `/home/resources/${relationship.source_table_name}?filters=[{"id":"${relationship.source_column_name}","value":"${value}","variant":"text","operator":"eq","filterId":"${relationship.id}"}]`
+                value =
+                  singleResourceData?.[
+                    relationship.target_column_name as keyof typeof singleResourceData
+                  ];
+                link = `/home/resources/${relationship.source_table_name}?filters=[{"id":"${relationship.source_column_name}","value":"${value}","variant":"text","operator":"eq","filterId":"${relationship.id}"}]`;
               }
               return (
                 <TableRow
@@ -37,15 +47,17 @@ export function ResourceForiegnDataView({
                   className="*:border-border hover:bg-transparent [&>:not(:last-child)]:border-r"
                 >
                   <TableCell className="bg-muted/50 w-1/4 py-2 font-medium">
-                  {value ? relationship.source_table_name : relationship.target_table_name}
+                    {value
+                      ? relationship.source_table_name
+                      : relationship.target_table_name}
                   </TableCell>
                   <TableCell className="py-2">
                     <Link
                       href={link}
-                      className="text-primary hover:underline text-sm flex items-center gap-2"
+                      className="text-primary flex items-center gap-2 text-sm hover:underline"
                     >
                       <ExternalLinkIcon className="size-4" />
-                      {String(value ?? "N/A")} 
+                      {String(value ?? "N/A")}
                     </Link>
                   </TableCell>
                 </TableRow>

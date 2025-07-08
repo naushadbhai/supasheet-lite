@@ -129,40 +129,55 @@ export async function loadSingleResourceData(
 export async function loadResources() {
   const client = await getSupabaseServerClient();
 
-  const response = await client.from("resources").select("id, name, grp, type");
+  // const response = await client.from("resources").select("id, name, grp, type");
 
   let resources: { name: string; id: string; group: string; type: string }[] =
     [];
 
-  if (response.error) {
-    const tableSchema = await client.from("_pg_meta_tables").select("*");
-    const tableResources =
-      tableSchema.data?.map((resource) => ({
-        name: resource.name as string,
-        id: resource.name as string,
-        group: resource.schema as string,
-        type: "table",
-      })) ?? [];
+  // if (response.error) {
+  const tableSchema = await client.from("_pg_meta_tables").select("*");
+  const tableResources =
+    tableSchema.data?.map((resource) => ({
+      name: resource.name as string,
+      id: resource.name as string,
+      group: resource.schema as string,
+      type: "table",
+    })) ?? [];
 
-    const viewSchema = await client.from("_pg_meta_views").select("*");
-    const viewResources =
-      viewSchema.data?.map((resource) => ({
-        name: resource.name as string,
-        id: resource.name as string,
-        group: resource.schema as string,
-        type: "view",
-      })) ?? [];
+  const viewSchema = await client.from("_pg_meta_views").select("*");
+  const viewResources =
+    viewSchema.data?.map((resource) => ({
+      name: resource.name as string,
+      id: resource.name as string,
+      group: resource.schema as string,
+      type: "view",
+    })) ?? [];
 
-    resources = [...tableResources, ...viewResources];
-  } else {
-    resources =
-      response.data?.map((resource) => ({
-        name: resource.name,
-        id: resource.id,
-        group: resource.grp,
-        type: resource.type,
-      })) ?? [];
-  }
+  const viewMaterializedSchema = await client
+    .from("_pg_meta_materialized_views")
+    .select("*");
+  const viewMaterializedResources =
+    viewMaterializedSchema.data?.map((resource) => ({
+      name: resource.name as string,
+      id: resource.name as string,
+      group: resource.schema as string,
+      type: "view",
+    })) ?? [];
+
+  resources = [
+    ...tableResources,
+    ...viewResources,
+    ...viewMaterializedResources,
+  ];
+  // } else {
+  //   resources =
+  //     response.data?.map((resource) => ({
+  //       name: resource.name,
+  //       id: resource.id,
+  //       group: resource.grp,
+  //       type: resource.type,
+  //     })) ?? [];
+  // }
 
   return resources ?? [];
 }

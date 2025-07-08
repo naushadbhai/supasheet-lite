@@ -11,9 +11,7 @@ export function ResourceDetailView({
   // Separate columns into different categories
   const detailColumns =
     columnsSchema?.filter((column) => {
-      return !["created_at", "updated_at"].includes(
-        column.name as string,
-      );
+      return !["created_at", "updated_at"].includes(column.name as string);
     }) ?? [];
 
   return (
@@ -25,7 +23,7 @@ export function ResourceDetailView({
             {detailColumns.map((column) => {
               let value =
                 singleResourceData?.[
-                column.name as keyof typeof singleResourceData
+                  column.name as keyof typeof singleResourceData
                 ] ?? "";
 
               if (typeof value === "object" && value !== null) {
@@ -37,7 +35,7 @@ export function ResourceDetailView({
                   className="*:border-border hover:bg-transparent [&>:not(:last-child)]:border-r"
                 >
                   <TableCell className="bg-muted/50 w-1/4 py-2 font-medium">
-                  {column.name as string}
+                    {column.name as string}
                   </TableCell>
                   <TableCell className="py-2">
                     <span className="text-muted-foreground text-sm">
@@ -51,5 +49,5 @@ export function ResourceDetailView({
         </Table>
       </div>
     </div>
-  )
+  );
 }

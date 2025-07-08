@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Column, ColumnDef, Row, Table } from "@tanstack/react-table";
 import { EyeIcon, Maximize2Icon } from "lucide-react";
 
@@ -9,7 +11,6 @@ import { getColumnMeta } from "@/features/resources/lib/columns";
 import { PrimaryKey, TableSchema } from "@/lib/database-meta.types";
 import { Tables } from "@/lib/database.types";
 import { DataTableRowAction } from "@/types/data-table";
-import Link from "next/link";
 
 export function getResourceTableColumns({
   columnsSchema,
@@ -20,7 +21,7 @@ export function getResourceTableColumns({
   tableSchema: Tables<"_pg_meta_tables"> | null;
   setRowAction: (rowAction: DataTableRowAction<TableSchema> | null) => void;
 }) {
-  const primaryKeys = tableSchema?.primary_keys as PrimaryKey[] ?? [];
+  const primaryKeys = (tableSchema?.primary_keys as PrimaryKey[]) ?? [];
 
   return [
     ...(tableSchema
@@ -56,9 +57,12 @@ export function getResourceTableColumns({
                   <Maximize2Icon className="text-muted-foreground size-3" />
                 </Button>
                 <Link
-                  href={`/home/resources/${tableSchema.name}/${primaryKeys.map(key => row.original?.[key.name as keyof TableSchema]?.toString() ?? "").join("/")}`}
+                  href={`/home/resources/${tableSchema.name}/${primaryKeys.map((key) => row.original?.[key.name as keyof TableSchema]?.toString() ?? "").join("/")}`}
                 >
-                  <Button variant="ghost" className="size-5 opacity-0 group-hover:opacity-100">
+                  <Button
+                    variant="ghost"
+                    className="size-5 opacity-0 group-hover:opacity-100"
+                  >
                     <EyeIcon className="text-muted-foreground size-3" />
                   </Button>
                 </Link>

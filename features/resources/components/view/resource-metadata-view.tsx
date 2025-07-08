@@ -8,7 +8,6 @@ export function ResourceMetadataView({
   columnsSchema: Tables<"_pg_meta_columns">[];
   singleResourceData: Record<string, unknown>;
 }) {
-
   const metadataColumns =
     columnsSchema?.filter((column) =>
       ["created_at", "updated_at"].includes(column.name as string),
@@ -25,7 +24,7 @@ export function ResourceMetadataView({
             {metadataColumns.map((column) => {
               const value =
                 singleResourceData?.[
-                column.name as keyof typeof singleResourceData
+                  column.name as keyof typeof singleResourceData
                 ];
               return (
                 <TableRow
@@ -37,9 +36,7 @@ export function ResourceMetadataView({
                   </TableCell>
                   <TableCell className="py-2">
                     <span className="text-muted-foreground text-sm">
-                      {value
-                        ? new Date(value as string).toLocaleString()
-                        : ""}
+                      {value ? new Date(value as string).toLocaleString() : ""}
                     </span>
                   </TableCell>
                 </TableRow>
@@ -49,5 +46,5 @@ export function ResourceMetadataView({
         </Table>
       </div>
     </div>
-  )
+  );
 }

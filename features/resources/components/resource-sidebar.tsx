@@ -17,9 +17,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { ResourcesGroup } from "./nav-resources";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export function ResourceSidebar({
   resources,
@@ -54,9 +54,7 @@ export function ResourceSidebar({
       <SidebarHeader className="gap-2.5 border-b">
         <Tabs defaultValue="resources">
           <TabsList className="w-full">
-            <TabsTrigger value="resources">
-              Resources
-            </TabsTrigger>
+            <TabsTrigger value="resources">Resources</TabsTrigger>
             <TabsTrigger value="sql" onClick={() => router.push("/home/sql")}>
               SQL
             </TabsTrigger>

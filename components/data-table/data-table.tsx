@@ -112,7 +112,7 @@ export function DataTable<TData>({
               <TableRow>
                 <TableCell
                   colSpan={table.getAllColumns().length}
-                  className="h-24 text-center border-r"
+                  className="h-24 border-r text-center"
                 >
                   No results.
                 </TableCell>

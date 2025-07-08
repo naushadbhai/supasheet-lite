@@ -1,19 +1,16 @@
 // import { SquarePenIcon, TrashIcon } from "lucide-react";
-
 // import { Button } from "@/components/ui/button";
+import { notFound } from "next/navigation";
+
+import { ResourceDetailView } from "@/features/resources/components/view/resource-detail-view";
+import { ResourceForiegnDataView } from "@/features/resources/components/view/resource-foriegn-data-view";
+import { ResourceMetadataView } from "@/features/resources/components/view/resource-metadata-view";
 import {
   loadColumnsSchema,
   loadSingleResourceData,
   loadTableSchema,
 } from "@/features/resources/lib/loaders";
-import {
-  DatabaseTables,
-  PrimaryKey,
-} from "@/lib/database-meta.types";
-import { ResourceDetailView } from "@/features/resources/components/view/resource-detail-view";
-import { ResourceMetadataView } from "@/features/resources/components/view/resource-metadata-view";
-import { ResourceForiegnDataView } from "@/features/resources/components/view/resource-foriegn-data-view";
-import { notFound } from "next/navigation";
+import { DatabaseTables, PrimaryKey } from "@/lib/database-meta.types";
 
 export default async function ViewPage({
   params,
@@ -45,9 +42,9 @@ export default async function ViewPage({
   if (!singleResourceData) return notFound();
 
   return (
-    <div className="p-4 mx-auto max-w-3xl">
+    <div className="mx-auto max-w-3xl p-4">
       <div className="flex flex-col gap-2.5">
-        <div className="text-xl font-medium pt-10 pb-4">View {id}</div>
+        <div className="pt-10 pb-4 text-xl font-medium">View {id}</div>
         <div>
           <div className="space-y-2.5">
             {/* Resource Details */}

@@ -24,8 +24,8 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { useLocalStorage } from "@/hooks/use-local-storage";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { useLocalStorage } from "@/hooks/use-local-storage";
 
 interface SqlSnippetItemProps {
   item: { name: string; id: string };
@@ -188,7 +188,10 @@ export function SqlSidebar() {
       <SidebarHeader className="gap-2.5 border-b">
         <Tabs defaultValue="sql">
           <TabsList className="w-full">
-            <TabsTrigger value="resources" onClick={() => router.push("/home/resources")}>
+            <TabsTrigger
+              value="resources"
+              onClick={() => router.push("/home/resources")}
+            >
               Resources
             </TabsTrigger>
             <TabsTrigger value="sql">SQL</TabsTrigger>
